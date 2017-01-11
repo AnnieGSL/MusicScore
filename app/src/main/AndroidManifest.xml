@@ -16,7 +16,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,6 +24,7 @@
             android:configChanges="screenSize|orientation"
             android:label="Resultados"></activity>
         <activity android:name=".VistaPartitura"></activity>
+        <activity android:name=".progresoAlm"></activity>
     </application>
 
 </manifest>
