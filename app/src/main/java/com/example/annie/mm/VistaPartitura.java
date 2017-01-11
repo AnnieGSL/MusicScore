@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+import android.support.v7.widget.PopupMenu;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.ScrollBar;
@@ -23,7 +26,7 @@ public class VistaPartitura extends AppCompatActivity {
         setContentView(R.layout.activity_vista_partitura);
 
         ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         assert actionBar!=null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_36dp);
@@ -46,33 +49,55 @@ public class VistaPartitura extends AppCompatActivity {
             }).load();
         }
     }
-    public boolean onOptionsItemSelected(MenuItem itm){
-        switch (itm.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
+
+        public boolean onOptionsItemSelected(MenuItem itm){
+            switch (itm.getItemId()){
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+                case R.id.agregar_partitura:
+                    Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
+                    return true;
+                case R.id.descargar_partitura:
+                    Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
+                    return true;
+                case R.id.registrar_progreso:
+                    Intent i = new Intent(this, progresoAlm.class);
+                    this.startActivity(i);
+                    break;
+            }
+/*
+            int id = itm.getItemId();
+
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.agregar_partitura) {
+                Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
+
+            }
+            if (id == R.id.descargar_partitura){
+                Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
+
+            }
+            if (id == R.id.registrar_progreso){
+                Intent i = new Intent(VistaPartitura.this, progresoAlm.class);
+                startActivity(i);
                 return true;
+
+            }
+            */
+
+            return super.onOptionsItemSelected(itm);
         }
 
-        int id = itm.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.agregar_partitura) {
-            Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
-            return true;
-        }
-        if (id == R.id.descargar_partitura){
-            Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
-            return true;
-        }
-        if (id == R.id.registrar_progreso){
-            Intent i = new Intent(this, progresoAlm.class);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(itm);
-    }
+    //DESHACER ESTOOOOOO
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+
+
+
+   public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.popup_part, menu);
         return true;
