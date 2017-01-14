@@ -50,51 +50,24 @@ public class VistaPartitura extends AppCompatActivity {
         }
     }
 
-        public boolean onOptionsItemSelected(MenuItem itm){
-            switch (itm.getItemId()){
-                case android.R.id.home:
-                    onBackPressed();
-                    return true;
-                case R.id.agregar_partitura:
-                    Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
-                    return true;
-                case R.id.descargar_partitura:
-                    Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
-                    return true;
-                case R.id.registrar_progreso:
-                    Intent i = new Intent(this, progresoAlm.class);
-                    this.startActivity(i);
-                    break;
-            }
-/*
-            int id = itm.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.agregar_partitura) {
-                Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
-
-            }
-            if (id == R.id.descargar_partitura){
-                Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
-
-            }
-            if (id == R.id.registrar_progreso){
-                Intent i = new Intent(VistaPartitura.this, progresoAlm.class);
-                startActivity(i);
+    public boolean onOptionsItemSelected(MenuItem itm){
+        switch (itm.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
                 return true;
-
-            }
-            */
-
-            return super.onOptionsItemSelected(itm);
+            case R.id.agregar_partitura:
+                Toast.makeText(VistaPartitura.this, "Partitura en favoritos", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.descargar_partitura:
+                Toast.makeText(VistaPartitura.this, "Iniciando Descarga", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.registrar_progreso:
+                Intent i = new Intent(this, progresoAlm.class);
+                this.startActivity(i);
+                break;
         }
-
-
-    //DESHACER ESTOOOOOO
-
-
-
-
+        return super.onOptionsItemSelected(itm);
+    }
 
 
    public boolean onCreateOptionsMenu(Menu menu) {
