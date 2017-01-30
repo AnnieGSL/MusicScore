@@ -25,6 +25,8 @@
             android:label="Resultados"></activity>
         <activity android:name=".VistaPartitura"></activity>
         <activity android:name=".progresoAlm"></activity>
+        <activity android:name=".creaObservacion"></activity>
+        <activity android:name=".vistaObservacion"></activity>
     </application>
 
 </manifest>

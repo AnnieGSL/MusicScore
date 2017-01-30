@@ -1,6 +1,7 @@
 package com.example.annie.mm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +61,9 @@ public class almAdapter extends RecyclerView.Adapter<almAdapter.MyViewHolder> {
                 switch(item.getItemId()) {
                     case R.id.obs:
                         Toast.makeText(context,"Observacion "+position,Toast.LENGTH_SHORT).show();
-                        return true;
+                        Intent i = new Intent(context, creaObservacion.class);
+                        context.startActivity(i);
+                        break;
                     case R.id.prg:
                         Toast.makeText(context,"Progreso "+position,Toast.LENGTH_SHORT).show();
                         return true;
