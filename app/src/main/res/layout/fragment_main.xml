@@ -42,6 +42,19 @@
                 android:textSize="18sp"
                 android:background="@color/colorPrimary"
                 android:onClick="buscar" />
+
+            <TextView
+                android:text="Filtrar por :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView12"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="10dp"/>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -57,7 +70,8 @@
                     android:id="@+id/piano"
                     android:background="@android:color/background_light"
                     android:adjustViewBounds="false"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:onClick="piano" />
 
                 <ImageButton
                     android:layout_height="match_parent"
@@ -65,7 +79,8 @@
                     android:id="@+id/guitar"
                     android:layout_width="match_parent"
                     android:background="@android:color/background_light"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:onClick="guitarra" />
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -73,7 +88,8 @@
                     app:srcCompat="@mipmap/violin"
                     android:id="@+id/violin"
                     android:background="@android:color/background_light"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:onClick="violin" />
             </LinearLayout>
 
             <LinearLayout

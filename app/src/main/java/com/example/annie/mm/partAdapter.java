@@ -1,6 +1,7 @@
 package com.example.annie.mm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 
 public class partAdapter extends RecyclerView.Adapter<partAdapter.MyViewHolder> {
     private Context context;
-    private ArrayList<item> itemList;
+    private ArrayList<Datos_simple> itemList;
     LayoutInflater inflater;
 
-    public partAdapter(Context context, ArrayList<item> itemList){
+    public partAdapter(Context context, ArrayList<Datos_simple> itemList){
         this.context = context;
         this.itemList = itemList;
         inflater = LayoutInflater.from(context);
@@ -33,62 +34,53 @@ public class partAdapter extends RecyclerView.Adapter<partAdapter.MyViewHolder> 
 
     @Override
     public partAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = inflater.inflate(R.layout.almns_item, parent,false);
+        View view = inflater.inflate(R.layout.busq_item, parent,false);
         partAdapter.MyViewHolder holder = new partAdapter.MyViewHolder(view);
         return holder;
     }
 
 
     public void onBindViewHolder(final partAdapter.MyViewHolder myViewHolder, final int position) {
-        myViewHolder.textView.setText(itemList.get(position).title);
-        myViewHolder.imageView.setImageResource(itemList.get(position).imageId);
-        myViewHolder.imageButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view)
-            {
-                showPopUpMenu(myViewHolder.imageButton,position);
+        final Datos_simple pdfDoc = itemList.get(position);
+        myViewHolder.textView.setText(pdfDoc.getName());
+        myViewHolder.setItemClickListener(new partAdapter.ItemClickListener(){
+            public void onItemClick(int pos){
+                openPDFView(pdfDoc.getPath());
             }
         });
     }
 
-    private void showPopUpMenu(View view, final int position) {
-        PopupMenu popup = new PopupMenu(view.getContext(),view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.popup_alms,popup.getMenu());
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
-            public boolean onMenuItemClick(MenuItem item){
-                switch(item.getItemId()) {
-                    case R.id.obs:
-                        Toast.makeText(context,"Observacion "+position,Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.prg:
-                        Toast.makeText(context,"Progreso "+position,Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.msj:
-                        Toast.makeText(context,"Mensaje "+position,Toast.LENGTH_SHORT).show();
-                        return true;
-                }
-                return false;
-            }
-        });
-        popup.show();
+    private void openPDFView(String path) {
+        Intent intent = new Intent(this.context, VistaPartitura.class);
+        intent.putExtra("PATH",path);
+        this.context.startActivity(intent);
     }
-
-
 
     @Override
     public int getItemCount() {
         return itemList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView textView;
-        ImageView imageView;
-        ImageButton imageButton;
+        ItemClickListener itemClickListener;
         public MyViewHolder(View itemView){
             super(itemView);
-            textView =(TextView)itemView.findViewById(R.id.txv_alm);
-            imageView = (ImageView)itemView.findViewById(R.id.img_alm);
-            imageButton = (ImageButton)itemView.findViewById((R.id.bt_alm));
+            itemView.setOnClickListener(this);
+            textView =(TextView)itemView.findViewById(R.id.tv_row);
         }
+
+        public void setItemClickListener(ItemClickListener itemClickListener){
+            this.itemClickListener = (ItemClickListener) itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onItemClick(getLayoutPosition());
+        }
+    }
+
+    interface ItemClickListener{
+        void onItemClick(int pos);
     }
 }

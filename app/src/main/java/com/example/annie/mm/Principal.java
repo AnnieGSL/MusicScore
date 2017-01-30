@@ -72,29 +72,29 @@ public class Principal extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.principal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.principal, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -113,8 +113,6 @@ public class Principal extends AppCompatActivity
             Partituras partitura = new Partituras();
             fm.beginTransaction().replace(R.id.content_frame, partitura).commit();
             //Toast.makeText(this, "Partitura Almacenada", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_favoritos) {
-            Toast.makeText(this, "Lista de Favoritas", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_alumnos) {
             Alumnos almno = new Alumnos();
             fm.beginTransaction().replace(R.id.content_frame, almno).commit();
@@ -132,6 +130,18 @@ public class Principal extends AppCompatActivity
     }
 
     public void buscar (View view) {
+        Intent i = new Intent(this, Busqueda.class);
+        startActivity(i);
+    }
+    public void piano (View view) {
+        Intent i = new Intent(this, Busqueda.class);
+        startActivity(i);
+    }
+    public void guitarra (View view) {
+        Intent i = new Intent(this, Busqueda.class);
+        startActivity(i);
+    }
+    public void violin (View view) {
         Intent i = new Intent(this, Busqueda.class);
         startActivity(i);
     }
