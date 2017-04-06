@@ -3,6 +3,7 @@ package com.example.annie.mm;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -62,7 +63,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private TextView or;
-    private TextView Create;
+    private TextView registForm;
+    private Button mEmailSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.password || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -94,14 +96,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        Create.setOnClickListener(new View.OnClickListener(){
+
+        registForm = (TextView) findViewById(R.id.create);
+        registForm.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,Registration.class);
+                LoginActivity.this.startActivity(i);
                 // Ir a Activity de registrar
-
             }
         });
+
+        int imeActionId = getResources().getInteger(R.integer.customImeActionId);
     }
 
     private void populateAutoComplete() {
