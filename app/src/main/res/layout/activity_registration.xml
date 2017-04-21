@@ -25,6 +25,12 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:id="@+id/imageView3" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -58,7 +64,7 @@
                     android:id="@+id/etUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Usuario"
+                    android:hint="Email de Usuario"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -89,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Registrar"
+                android:text="Crear Cuenta"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"

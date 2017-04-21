@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:srcCompat="@mipmap/login"
-                android:id="@+id/imageView4"
+                android:id="@+id/ivLogin"
                  />
 
             <android.support.design.widget.TextInputLayout
@@ -48,7 +48,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="User name"
+                    android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -63,7 +63,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="Contraseña"
                     android:imeActionId="@integer/customImeActionId"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Ingresar"
+                android:text="Iniciar Sesión"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"
