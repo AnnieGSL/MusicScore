@@ -71,14 +71,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        registForm = (TextView) findViewById(R.id.create);
 
         mLogin = (ImageView)findViewById(R.id.ivLogin);
         or = (TextView)findViewById(R.id.or);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        registForm.setOnClickListener(new View.OnClickListener(){
 
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,Registration.class);
+                LoginActivity.this.startActivity(i);
+                // Ir a Activity de registrar
+            }
+        });
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,16 +136,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        registForm = (TextView) findViewById(R.id.create);
-        registForm.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this,Registration.class);
-                LoginActivity.this.startActivity(i);
-                // Ir a Activity de registrar
-            }
-        });
 
         int imeActionId = getResources().getInteger(R.integer.customImeActionId);
     }
