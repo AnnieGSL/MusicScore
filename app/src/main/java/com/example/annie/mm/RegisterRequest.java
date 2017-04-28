@@ -11,7 +11,7 @@ import java.util.Map;
  */
 
 public class RegisterRequest extends StringRequest {
-    private static final String REGISTER_REQUEST_URL = "http://tonikamitv.hostei.com/Register.php"; //CAMBIAR!!!
+    private static final String REGISTER_REQUEST_URL = "http://127.0.0.1:80/xampp/MusicScore/Register.php"; //CAMBIAR!!!
     private Map<String, String> params;
 
     public RegisterRequest(String name, String user, int age, String password, Response.Listener<String> listener) {
