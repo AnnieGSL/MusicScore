@@ -48,7 +48,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/hint_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -63,7 +63,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contraseña"
+                    android:hint="@string/hint_password"
                     android:imeActionId="@integer/customImeActionId"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Iniciar Sesión"
+                android:text="@string/btn_login"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"
@@ -88,31 +88,20 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:textSize="18sp"/>
 
-            <TextView
-                android:text="Or"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btnLinkToRegisterScreen"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/or"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="16dp"
-                android:textAlignment="center"
-                android:textStyle="normal|italic"
-                android:textSize="16sp"
-                android:fontFamily="casual"
-                />
-
-            <TextView
-                android:text="Crear Cuenta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/create"
-                android:textSize="18sp"
+                android:layout_marginTop="40dip"
+                android:background="@null"
+                android:text="@string/btn_link_to_register"
+                android:textAllCaps="false"
                 android:textAlignment="center"
                 android:textStyle="normal|bold"
                 android:fontFamily="casual"
                 android:textColor="@color/colorAccent"
-                android:clickable="true"/>
+                android:textSize="18dp" />
+
 
         </LinearLayout>
 

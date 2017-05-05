@@ -13,6 +13,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.annie.mm.Registration">
 
+    <ProgressBar
+        android:id="@+id/register_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/register_form"
         android:layout_width="match_parent"
@@ -38,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="Nombre"
+                android:hint="@string/hint_name"
                 android:maxLines="1"
                 android:id="@+id/etName" />
             </android.support.design.widget.TextInputLayout>
@@ -79,7 +87,7 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contraseña"
+                    android:hint="@string/hint_password"
                     android:imeActionId="@integer/customImeActionId"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -95,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Crear Cuenta"
+                android:text="@string/btn_register"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"
@@ -104,17 +112,24 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:textSize="18sp"/>
 
+            <!-- Link to Login Screen -->
+
+            <Button
+                android:id="@+id/btnLinkToLoginScreen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip"
+                android:background="@null"
+                android:text="@string/btn_link_to_login"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textStyle="normal|bold"
+                android:fontFamily="casual"
+                android:textColor="@color/colorAccent"
+                android:textSize="18dp" />
+
         </LinearLayout>
      </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/register_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
 
 </LinearLayout>
 

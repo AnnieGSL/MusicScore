@@ -13,8 +13,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.annie.mm.UserArea">
 
+    <ProgressBar
+        android:id="@+id/usera_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
     <ScrollView
-        android:id="@+id/register_form"
+        android:id="@+id/usera_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,7 +40,7 @@
                 android:id="@+id/imUser" />
 
             <TextView
-                android:text="Bienvenido"
+                android:text="@string/welcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_WelcomeMsg"
@@ -46,11 +54,10 @@
                 android:textAllCaps="false"
                 android:textAlignment="center" />
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
                 android:id="@+id/etUsername"
                 android:fontFamily="cursive"
@@ -59,17 +66,9 @@
                 android:textStyle="normal|bold" />
 
 
+
         </LinearLayout>
     </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/register_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
 
 </LinearLayout>
 
