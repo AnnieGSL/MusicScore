@@ -10,11 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.HashMap;
 
 public class UserArea extends AppCompatActivity {
-    private SQLiteHandler db;
-    private SessionManager session;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -28,17 +25,6 @@ public class UserArea extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.usera_progress);
         mProgressView = findViewById(R.id.usera_progress);
 
-        db = new SQLiteHandler(getApplicationContext());
-
-        // session manager
-        session = new SessionManager(getApplicationContext());
-
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -49,20 +35,11 @@ public class UserArea extends AppCompatActivity {
         etUsername.setText(username);
 
 
-        Intent i = new Intent(UserArea.this,
-                Principal.class);
+        Intent i = new Intent(UserArea.this, Principal.class);
         startActivity(i);
         finish();
     }
 
-    private void logoutUser() {
-        session.setLogin(false);
-        db.deleteUsers();
-        // Launching the login activity
-        Intent intent = new Intent(UserArea.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {

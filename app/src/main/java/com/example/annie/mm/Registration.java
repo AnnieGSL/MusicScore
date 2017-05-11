@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,8 +36,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Registration extends AppCompatActivity {
-    private View mProgressView;
-    private View mLoginFormView;
+    private static final String TAG = "RegisterActivity";
+    private static final String URL_FOR_REGISTRATION = "http://192.168.1.8/MusicScore/Register.php";
+    ProgressDialog pDialog;
+
     private EditText etAge;
     private EditText etName;
     private EditText etUser;
@@ -45,12 +48,16 @@ public class Registration extends AppCompatActivity {
     private Button bRegister;
     private Button btnLinkToLogin;
 
-    private static final String REGISTER_URL = "http://192.168.1.8/MusicScore/Register.php";
+    private RadioGroup rgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        //Progress Dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
 
         etAge = (EditText)findViewById(R.id.etAge);
         etName = (EditText)findViewById(R.id.etName);
@@ -60,122 +67,100 @@ public class Registration extends AppCompatActivity {
         bRegister = (Button)findViewById(R.id.user_register_button);
         btnLinkToLogin = (Button)findViewById(R.id.btnLinkToLoginScreen);
 
-        int imeActionId = getResources().getInteger(R.integer.customImeActionId);
-
-        mLoginFormView = findViewById(R.id.register_form);
-        mProgressView = findViewById(R.id.register_progress);
+        rgPerfil = (RadioGroup)findViewById(R.id.perfil_rg);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String name = etName.getText().toString().trim().toLowerCase();
-                String user = etUser.getText().toString().trim().toLowerCase();
-                String etAges = etAge.getText().toString().trim().toLowerCase();
-                int age = Integer.parseInt(etAges);
-                String password = etPassword.getText().toString().trim().toLowerCase();
-
-                if (!name.isEmpty() && !etAges.isEmpty() && !user.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, user, age, password);
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
-                            .show();
-                }
+                submitForm();
             }
         });
 
         // Link to Login Screen
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
-
+            @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
-                finish();
             }
         });
     }
 
-    /**
-     * Function to store user in MySQL database will post params(tag, name,
-     * email, password) to register url
-     * */
-    private void registerUser(String name, String username, int age, String password) {
-        String urlSuffix = "?name=" + name + "&username=" + username + "&age=" + age + "&password=" + password;
-        class RegisterUser extends AsyncTask<String, Void, String> {
-            ProgressDialog loading;
+    private void submitForm(){
+        int selectedId = rgPerfil.getCheckedRadioButtonId();
+        String perfil;
+        if(selectedId == R.id.a_radio_btn)
+            perfil = "Alumno";
+        else
+            perfil = "Profesor";
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(Registration.this, "Please Wait",null, true, true);
-            }
+        registerUser(etName.getText().toString(), etUser.getText().toString(), etPassword.getText().toString(), perfil, etAge.getText().toString());
+    }
 
+    private void registerUser(final String name, final String username, final String password, final String perfil, final String age) {
+        // Tag used to cancel the request
+        String cancel_req_tag = "register";
+        pDialog.setMessage("Adding you...");
+        showDialog();
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                URL_FOR_REGISTRATION, new Response.Listener<String>() {
             @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            }
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+                hideDialog();
 
-            @Override
-            protected String doInBackground(String... params) {
-                String s = params[0];
-                BufferedReader bufferedReader = null;
                 try {
-                    URL url = new URL(REGISTER_URL+s);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
 
-                    String result;
+                    if (!error) {
+                        String user = jObj.getJSONObject("user").getString("name");
+                        Toast.makeText(getApplicationContext(), "Hi " + user +", You are successfully Added!", Toast.LENGTH_SHORT).show();
 
-                    result = bufferedReader.readLine();
-
-                    return result;
-                }catch(Exception e){
-                    return null;
+                        // Launch login activity
+                        Intent intent = new Intent(Registration.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
-            RegisterUser ru = new RegisterUser();
-            ru.run(urlSuffix);
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name", name);
+                params.put("username", username);
+                params.put("password", password);
+                params.put("perfil", perfil);
+                params.put("age", age);
+                return params;
+            }
+        };
+        // Adding request to request queue
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
 
-
-
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
     }
 
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
 }
